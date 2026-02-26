@@ -1,26 +1,198 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4f8ff;
+  --foreground: #0b1220;
+  --muted: #475569;
+  --card: rgba(255, 255, 255, 0.82);
+  --border: rgba(148, 163, 184, 0.34);
+  --brand: #0f172a;
+  --brand-soft: #dbeafe;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --font-sans: var(--font-manrope);
+  --font-mono: var(--font-plex-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes ambientDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2.5%, -1.6%, 0) scale(1.03);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes gridPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
+
+* {
+  border-color: var(--border);
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  color: var(--foreground);
+  font-family: var(--font-manrope), sans-serif;
+  background:
+    radial-gradient(1250px 620px at 2% -5%, rgba(56, 189, 248, 0.24), rgba(255, 255, 255, 0)),
+    radial-gradient(1100px 580px at 98% 0%, rgba(16, 185, 129, 0.18), rgba(255, 255, 255, 0)),
+    linear-gradient(180deg, #f8fbff 0%, #eef4ff 42%, #f6f8ff 100%);
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: -10%;
+  pointer-events: none;
+}
+
+body::before {
+  z-index: -2;
+  background:
+    radial-gradient(circle at 15% 22%, rgba(14, 165, 233, 0.18), transparent 36%),
+    radial-gradient(circle at 84% 16%, rgba(99, 102, 241, 0.13), transparent 34%),
+    radial-gradient(circle at 82% 76%, rgba(16, 185, 129, 0.13), transparent 33%);
+  animation: ambientDrift 18s ease-in-out infinite;
+}
+
+body::after {
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.05) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(circle at center, black 30%, transparent 88%);
+  animation: gridPulse 10s ease-in-out infinite;
+}
+
+::selection {
+  background: rgba(14, 165, 233, 0.28);
+  color: #0b1220;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background:
+    radial-gradient(1400px 760px at 6% -12%, rgba(56, 189, 248, 0.18), transparent 45%),
+    radial-gradient(1200px 700px at 92% -8%, rgba(16, 185, 129, 0.12), transparent 40%),
+    linear-gradient(180deg, #060a17 0%, #070d1d 48%, #020617 100%);
+  color: #dbe7ff;
+}
+
+html.dark body::before {
+  background:
+    radial-gradient(circle at 14% 24%, rgba(56, 189, 248, 0.16), transparent 34%),
+    radial-gradient(circle at 85% 15%, rgba(20, 184, 166, 0.11), transparent 34%),
+    radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.11), transparent 35%);
+}
+
+html.dark body::after {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.09) 1px, transparent 1px);
+}
+
+html.dark [class*="bg-white"] {
+  background-color: rgba(11, 18, 32, 0.82) !important;
+}
+
+html.dark [class*="bg-zinc-50"] {
+  background-color: rgba(16, 25, 44, 0.78) !important;
+}
+
+html.dark [class*="bg-zinc-100"] {
+  background-color: rgba(20, 31, 53, 0.86) !important;
+}
+
+html.dark [class*="border-zinc-200"] {
+  border-color: rgba(71, 85, 105, 0.78) !important;
+}
+
+html.dark [class*="border-zinc-300"] {
+  border-color: rgba(100, 116, 139, 0.82) !important;
+}
+
+html.dark [class*="text-zinc-900"] {
+  color: #f4f8ff !important;
+}
+
+html.dark [class*="text-zinc-800"] {
+  color: #e2e8f0 !important;
+}
+
+html.dark [class*="text-zinc-700"] {
+  color: #d2dbee !important;
+}
+
+html.dark [class*="text-zinc-600"] {
+  color: #a8b4cb !important;
+}
+
+html.dark [class*="text-zinc-500"] {
+  color: #8492ab !important;
+}
+
+html.dark .bg-zinc-900 {
+  background: linear-gradient(120deg, #22d3ee, #2dd4bf) !important;
+}
+
+html.dark .text-white {
+  color: #0b1220 !important;
+}
+
+html.dark .hover\:bg-zinc-50:hover {
+  background-color: rgba(24, 37, 62, 0.96) !important;
+}
+
+html.dark .hover\:bg-zinc-100:hover {
+  background-color: rgba(30, 47, 76, 0.98) !important;
+}
+
+html.dark input,
+html.dark textarea {
+  background-color: rgba(8, 13, 25, 0.94) !important;
+  color: #e2e8f0 !important;
+  border-color: rgba(71, 85, 105, 0.84) !important;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(148, 163, 184, 0.16);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(14, 165, 233, 0.55), rgba(16, 185, 129, 0.55));
+  border-radius: 999px;
+}
+
